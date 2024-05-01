@@ -1,6 +1,7 @@
 // ignore_for_file: curly_braces_in_flow_control_structures
 
 import 'dart:convert';
+import 'dart:ffi';
 import 'DTO/food.dart';
 import 'DTO/food_list_item.dart';
 import 'package:http/http.dart' as http;
@@ -23,7 +24,7 @@ class FoodRepository
   }
 
   /// Retrieves food's details from API server
-  Future<Food?> _getFromAPI(String foodId, FoodRepositoryGetErrors errors) async
+  Future<dynamic> _getFromAPI(String foodId, FoodRepositoryGetErrors errors) async
   {
     final response = await http.get(
       Uri.parse(
@@ -48,23 +49,26 @@ class FoodRepository
     return foodApi['hints'][0]['food'];
   }
 
+  /// Converts APIs food's nutrient to app's food nutrient
   Nutrient _convertToNutrient(dynamic nutrientFromApi)
   {
-    return Nutrient(
-
-    );
+    double energy = nutrientFromApi['ENERC_KCAL'];
+    double protein = nutrientFromApi['PROCNT'];
+    double fat = nutrientFromApi['FAT'];
+    double carbohydrate = nutrientFromApi['CHOCDF'];
+    return Nutrient(energy, protein, fat, carbohydrate);
   }
 
-  /// Convert API's food list item to app's food list item
-  Food _convertToFood(dynamic foodFromApi)
+  /// Converts API's food list item to app's food list item
+  Food _convertToFood(Map<String, dynamic> foodFromApi)
   {
-    return Food(
-      id: foodFromApi['foodId'],
-      name: foodFromApi['label'],
-      thumbnailUrl: foodFromApi['image'],
-      nutrients: foodFromApi['nutrients'],
-      category: foodFromApi['category']
-    );
+    String id = foodFromApi['foodId'];
+    String name = foodFromApi['label'];
+    Nutrient nutrient = _convertToNutrient(foodFromApi['nutrients']);
+    String category = foodFromApi['category'];
+    String thumbnailUrl = foodFromApi['image'];
+
+    return Food(id, name, nutrient, category, thumbnailUrl);
   }
 
   /// Retrieves food's details.
@@ -79,7 +83,11 @@ class FoodRepository
     }
 
     final foodFromApi = await _getFromAPI(id, errors);
-    return null;
+
+    if (errors.hasAny())
+      return null;
+
+    return _convertToFood(foodFromApi);
   }
 
 
@@ -121,6 +129,10 @@ class FoodRepository
 
     List<FoodListItem> result = [];
     final foodListFromApi = await _findFromAPI(query, errors);
+
+    if (errors.hasAny())
+      return [];
+
     for (final item in foodListFromApi)
       result.add(_convertToFoodListItem(item));
 

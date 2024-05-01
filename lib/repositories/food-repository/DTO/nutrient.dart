@@ -9,8 +9,15 @@ class Nutrient
 
   Nutrient(this._energy, this._protein, this._fat, this._carbohydrate);
 
+  /// Retrieves food's energy in kilocalories
   double getEnergyInKcal() => _energy;
+
+  /// Retrieves food's protein in grams
   double getProteinInGram() => _protein;
+
+  /// Retrieves food's fat in grams
   double getFatInGram() => _fat;
+
+  /// Retrieves food's carbohydrate in grams
   double getCarbohydrateInGram() => _carbohydrate;
 }

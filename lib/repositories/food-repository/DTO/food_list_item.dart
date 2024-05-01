@@ -8,7 +8,12 @@ class FoodListItem
 
   FoodListItem(this._id, this._name, this._thumbnailUrl);
 
+  /// Retrieves food's identifier
   String getId() => _id;
+
+  /// Retrieves food's name
   String getName() => _name;
+
+  /// Retrieves food's thumbnail's URL
   String? getThumbnail() => _thumbnailUrl;
 }

@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:lab_food_2/repositories/food-repository/DTO/food_list_item.dart';
 import 'package:lab_food_2/repositories/food-repository/errors/food_repository_find_errors.dart';
+import 'package:lab_food_2/repositories/food-repository/errors/food_repository_get_errors.dart';
 import 'package:lab_food_2/repositories/food-repository/food_repository.dart';
+
+import 'repositories/food-repository/DTO/food.dart';
 
 class WeatherApp extends StatelessWidget
 {
@@ -36,7 +40,7 @@ void main() async
 {
     WeatherApp app = const WeatherApp();
     FoodRepository foods = FoodRepository();
-    FoodRepositoryFindErrors errors = FoodRepositoryFindErrors();
-    final foodList = await foods.find('cereal', errors);
+    FoodRepositoryGetErrors errors = FoodRepositoryGetErrors();
+    Food? food = await foods.get("food_adc1nzdb5zh4wya5q99krac7k8q6", errors);
     runApp(app);
 }
