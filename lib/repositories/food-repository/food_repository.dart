@@ -1,13 +1,12 @@
 // ignore_for_file: curly_braces_in_flow_control_structures
 
 import 'dart:convert';
-import 'package:lab_food_2/repositories/food-repository/DTO/nutrient.dart';
-
 import 'DTO/food.dart';
 import 'DTO/food_list_item.dart';
 import 'package:http/http.dart' as http;
 import 'errors/food_repository_find_errors.dart';
 import 'errors/food_repository_get_errors.dart';
+import 'package:lab_food_2/repositories/food-repository/DTO/nutrient.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 
 
@@ -52,7 +51,7 @@ class FoodRepository
   Nutrient _convertToNutrient(dynamic nutrientFromApi)
   {
     return Nutrient(
-      
+
     );
   }
 
@@ -82,6 +81,8 @@ class FoodRepository
     final foodFromApi = await _getFromAPI(id, errors);
     return null;
   }
+
+
 
   /// Retrieves a list of foods from API server
   Future<List> _findFromAPI(String query, FoodRepositoryFindErrors errors) async
