@@ -39,6 +39,7 @@ dependencies:
   internet_connection_checker_plus: ^2.3.0
   shared_preferences: ^2.2.3
   google_fonts: ^6.2.1
+  flutter_image: ^4.1.11
 
 dev_dependencies:
   flutter_test:

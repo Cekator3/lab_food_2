@@ -15,7 +15,7 @@ class FavoriteFoodRepository
   static SharedPreferences? _storage;
   List<String>? _favoriteFoodsIds;
 
-  Future<void> _init() async
+  Future<void> init() async
   {
     _storage = await SharedPreferences.getInstance();
     _favoriteFoodsIds = _storage!.getStringList('favoriteFoods') ?? [];
@@ -29,10 +29,10 @@ class FavoriteFoodRepository
   /// Adds a food to the user's list of favorite foods.
   ///
   /// If food is already in the list nothing will happen.
-  Future<void> add(String foodId) async
+  void add(String foodId)
   {
-    if (_favoriteFoodsIds == null)
-      await _init();
+    if (_storage == null)
+      throw Exception('FavoriteFoodRepository not initialized. Please call init procedure before any interaction attempt.');
 
     if (_favoriteFoodsIds!.contains(foodId))
       return;
@@ -44,20 +44,20 @@ class FavoriteFoodRepository
   /// Removes a food from the user's list of favorite foods.
   ///
   /// If food not in the list nothing will happen.
-  Future<void> remove(String foodId) async
+  void remove(String foodId)
   {
-    if (_favoriteFoodsIds == null)
-      await _init();
+    if (_storage == null)
+      throw Exception('FavoriteFoodRepository not initialized. Please call init procedure before any interaction attempt.');
 
     _favoriteFoodsIds!.remove(foodId);
     _updateStorage();
   }
 
   /// Checks if a food is in the user's list of favorite foods.
-  Future<bool> contains(String foodId) async
+  bool contains(String foodId)
   {
-    if (_favoriteFoodsIds == null)
-      await _init();
+    if (_storage == null)
+      throw Exception('FavoriteFoodRepository not initialized. Please call init procedure before any interaction attempt.');
 
     return _favoriteFoodsIds!.contains(foodId);
   }
@@ -109,8 +109,8 @@ class FavoriteFoodRepository
   /// Returns empty list if error was encountered.
   Future<List<FavoriteFoodListItem>> getAll(FavoriteFoodRepositoryGetAllErrors errors) async
   {
-    if (_favoriteFoodsIds == null)
-      await _init();
+    if (_storage == null)
+      throw Exception('FavoriteFoodRepository not initialized. Please call init procedure before any interaction attempt.');
 
     if (! (await _isConnectedToInternet()))
     {

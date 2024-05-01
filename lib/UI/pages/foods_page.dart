@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../repositories/food-repository/DTO/food_list_item.dart';
 import '../../repositories/food-repository/errors/food_repository_find_errors.dart';
 import '../../repositories/food-repository/food_repository.dart';
+import 'food_details_page.dart';
 
 class FoodsPage extends StatefulWidget
 {
@@ -114,16 +115,16 @@ class FoodsPageState extends State<FoodsPage>
                       padding: const EdgeInsets.all(2.0),
                       child: ListTile(
                         title: Text(_foodList[index].getName()),
-                        leading: _getFoodThumbnail(_foodList[index])
-                        // onTap: ()
-                        // {
-                        //   Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //       builder: (context) => ProductDetailScreen(foodId: _foodList[index].getId()),
-                        //     ),
-                        //   );
-                        // },
+                        leading: _getFoodThumbnail(_foodList[index]),
+                        onTap: ()
+                        {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => FoodDetailsPage(foodId: _foodList[index].getId()),
+                            ),
+                          );
+                        },
                       ),
                     );
                   },

@@ -65,7 +65,7 @@ class FoodRepository
     String name = foodFromApi['label'];
     Nutrient nutrient = _convertToNutrient(foodFromApi['nutrients']);
     String category = foodFromApi['category'];
-    String thumbnailUrl = foodFromApi['image'];
+    String? thumbnailUrl = foodFromApi['image'];
 
     return Food(id, name, nutrient, category, thumbnailUrl);
   }
