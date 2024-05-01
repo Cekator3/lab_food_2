@@ -15,7 +15,7 @@ class FavoriteFoodRepository
   /// Adds a food to the user's list of favorite foods.
   ///
   /// If food is already in the list nothing will happen.
-  void add(int foodId)
+  void add(String foodId)
   {
     // ...
   }
@@ -23,13 +23,13 @@ class FavoriteFoodRepository
   /// Removes a food from the user's list of favorite foods.
   ///
   /// If food not in the list nothing will happen.
-  void remove(int foodId)
+  void remove(String foodId)
   {
     // ...
   }
 
   /// Checks if a food is in the user's list of favorite foods.
-  bool contains(int foodId)
+  bool contains(String foodId)
   {
     // ...
   }

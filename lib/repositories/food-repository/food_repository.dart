@@ -12,25 +12,70 @@ import 'package:internet_connection_checker_plus/internet_connection_checker_plu
 /// A subsystem for interaction with stored data on foods.
 class FoodRepository
 {
+  static const String _APP_ID = 'b8e1c762';
+  static const String _APP_KEY = 'b0b1379f2ba58396198214cc4f9c476c';
+
   /// Checks if device is connected to the internet
   Future<bool> _isConnectedToInternet() async
   {
       return await InternetConnection().hasInternetAccess;
   }
 
+  /// Retrieves food's details from API server
+  Future<Food?> _getFromAPI(String foodId, FoodRepositoryGetErrors errors) async
+  {
+    final response = await http.get(
+      Uri.parse(
+          'https://api.edamam.com/api/food-database/v2/parser?ingr=${Uri.encodeComponent(foodId)}&app_id=$_APP_ID&app_key=$_APP_KEY'),
+    );
+
+    if (response.statusCode != 200)
+    {
+      errors.add(FoodRepositoryGetErrors.INTERNAL);
+      return null;
+    }
+
+    var foodApi = jsonDecode(response.body);
+    if (foodApi == null &&
+        foodApi['hints'] == null &&
+        foodApi['hints'].isEmpty &&
+        foodApi['hints'][0]['food'] == null)
+    {
+      return null;
+    }
+
+    return foodApi['hints'][0]['food'];
+  }
+
+  /// Convert API's food list item to app's food list item
+  // FoodListItem _convertToFood(dynamic foodFromApi)
+  // {
+
+  // }
+
   /// Retrieves food's details.
   ///
   /// Returns [null] if error was encountered.
-  Food? get(int id, FoodRepositoryGetErrors errors)
+  Future<Food?> get(String id, FoodRepositoryGetErrors errors) async
   {
-    // ...
+    if (! (await _isConnectedToInternet()))
+    {
+      errors.add(FoodRepositoryGetErrors.INTERNET_CONNECTION_MISSING);
+      return null;
+    }
+
+    FoodListItem? result;
+    final foodListFromApi = await _getFromAPI(id, errors);
+
+    return result;
   }
 
+  /// Retrieves a list of foods from API server
   Future<List> _findFromAPI(String query, FoodRepositoryFindErrors errors) async
   {
     final response = await http.get(
       Uri.parse(
-          'https://api.edamam.com/api/food-database/v2/parser?ingr=$query&app_id=b8e1c762&app_key=b0b1379f2ba58396198214cc4f9c476c'),
+          'https://api.edamam.com/api/food-database/v2/parser?ingr=$query&app_id=$_APP_ID&app_key=$_APP_KEY'),
     );
 
     if (response.statusCode == 200)
@@ -40,6 +85,7 @@ class FoodRepository
     return [];
   }
 
+  /// Convert API's food list item to app's food list item
   FoodListItem _convertToFoodListItem(dynamic foodListItemFromApi)
   {
     String id = foodListItemFromApi['food']['foodId'];
