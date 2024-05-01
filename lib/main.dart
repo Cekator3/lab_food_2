@@ -1,45 +1,76 @@
 import 'package:flutter/material.dart';
-import 'package:lab_food_2/repositories/favorite-food-repository/errors/favorite_food_repository_get_all_errors.dart';
-import 'package:lab_food_2/repositories/favorite-food-repository/favorite_food_repository.dart';
-import 'package:lab_food_2/repositories/food-repository/DTO/food_list_item.dart';
-import 'package:lab_food_2/repositories/food-repository/errors/food_repository_find_errors.dart';
-import 'package:lab_food_2/repositories/food-repository/errors/food_repository_get_errors.dart';
-import 'package:lab_food_2/repositories/food-repository/food_repository.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:lab_food_2/UI/pages/foodspage.dart';
 
-import 'repositories/food-repository/DTO/food.dart';
-
-class WeatherApp extends StatelessWidget
+class FoodApp extends StatefulWidget
 {
-    const WeatherApp({super.key});
+  const FoodApp({super.key});
 
-    @override
-    Widget build(BuildContext context)
+  @override
+  FoodAppState createState() => FoodAppState();
+}
+
+class FoodAppState extends State<FoodApp>
+{
+  int currentIndex = 0;
+
+  @override
+  Widget build(BuildContext context)
+  {
+    void onNavigationBarLinkTapped(int index) async
     {
-        return MaterialApp(
-            title: 'Прогноз погоды',
-            theme: ThemeData(
-                useMaterial3: true,
-                colorScheme: const ColorScheme.light(
-                    onSurface: Colors.cyan,
-                    onBackground: Colors.cyan,
-                ),
-                // textTheme: GoogleFonts.manropeTextTheme(),
-                appBarTheme: const AppBarTheme(
-                    backgroundColor: Colors.cyan,
-                    titleTextStyle: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                    ),
-                    centerTitle: true,
-                ),
-            ),
-            // home: const WeatherHomePage(title: 'Прогноз погоды'),
-        );
+      setState(() {
+        currentIndex = index;
+      });
     }
+
+    return MaterialApp(
+        title: 'Еда',
+        theme: ThemeData(
+            useMaterial3: true,
+            colorScheme: const ColorScheme.light(
+                onSurface: Colors.cyan,
+                onBackground: Colors.cyan,
+            ),
+            textTheme: GoogleFonts.manropeTextTheme(),
+            appBarTheme: const AppBarTheme(
+                backgroundColor: Colors.cyan,
+                titleTextStyle: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                ),
+                centerTitle: true,
+            ),
+        ),
+        home: Scaffold(
+          body: IndexedStack(
+            index: currentIndex,
+            children: const [
+              FoodsPage(),
+              // FavoriteFoodsPage()
+            ],
+          ),
+          bottomNavigationBar: BottomNavigationBar(
+            currentIndex: currentIndex,
+            onTap: onNavigationBarLinkTapped,
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                label: 'Главная',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.favorite),
+                label: 'Избранное',
+              ),
+            ],
+          ),
+        )
+    );
+  }
 }
 
 void main() async
 {
-    WeatherApp app = const WeatherApp();
+    FoodApp app = const FoodApp();
     runApp(app);
 }
