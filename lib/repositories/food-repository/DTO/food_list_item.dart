@@ -4,7 +4,7 @@ class FoodListItem
 {
   final String id;
   final String name;
-  final String thumbnailUrl;
+  final String? thumbnailUrl;
 
   FoodListItem(this.id, this.name, this.thumbnailUrl);
 }
