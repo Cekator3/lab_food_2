@@ -1,7 +1,6 @@
 // ignore_for_file: curly_braces_in_flow_control_structures
 
 import 'dart:convert';
-import 'dart:ffi';
 import 'DTO/food.dart';
 import 'DTO/food_list_item.dart';
 import 'package:http/http.dart' as http;
@@ -100,11 +99,13 @@ class FoodRepository
           'https://api.edamam.com/api/food-database/v2/parser?ingr=$query&app_id=$_APP_ID&app_key=$_APP_KEY'),
     );
 
-    if (response.statusCode == 200)
-        return jsonDecode(response.body)['hints'];
+    if (response.statusCode != 200)
+    {
+      errors.add(FoodRepositoryFindErrors.INTERNAL);
+      return [];
+    }
 
-    errors.add(FoodRepositoryFindErrors.INTERNAL);
-    return [];
+    return jsonDecode(response.body)['hints'];
   }
 
   /// Convert API's food list item to app's food list item
