@@ -58,7 +58,7 @@ class FoodRepository
     return Nutrient(energy, protein, fat, carbohydrate);
   }
 
-  /// Converts API's food list item to app's food list item
+  /// Converts API's food to app's food list item
   Food _convertToFood(Map<String, dynamic> foodFromApi)
   {
     String id = foodFromApi['foodId'];
@@ -117,6 +117,17 @@ class FoodRepository
     return FoodListItem(id, name, thumbnailUrl);
   }
 
+  /// Checks if the [food] with the same identifier exists in the [foods]
+  bool isInFoodList(List<FoodListItem> foods, FoodListItem food)
+  {
+    for (FoodListItem listItem in foods)
+    {
+      if (listItem.getId() == food.getId())
+        return true;
+    }
+    return false;
+  }
+
   /// Retrieves a list of foods matching the query.
   ///
   /// Returns empty list if error was encountered.
@@ -135,7 +146,12 @@ class FoodRepository
       return [];
 
     for (final item in foodListFromApi)
-      result.add(_convertToFoodListItem(item));
+    {
+      // edamam.api have food entries with the same identifiers
+      FoodListItem food = _convertToFoodListItem(item);
+      if (! isInFoodList(result, food))
+        result.add(food);
+    }
 
     return result;
   }
