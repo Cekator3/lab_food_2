@@ -1,6 +1,8 @@
 // ignore_for_file: curly_braces_in_flow_control_structures
 
 import 'dart:convert';
+import 'package:lab_food_2/repositories/food-repository/DTO/nutrient.dart';
+
 import 'DTO/food.dart';
 import 'DTO/food_list_item.dart';
 import 'package:http/http.dart' as http;
@@ -47,11 +49,24 @@ class FoodRepository
     return foodApi['hints'][0]['food'];
   }
 
-  /// Convert API's food list item to app's food list item
-  // FoodListItem _convertToFood(dynamic foodFromApi)
-  // {
+  Nutrient _convertToNutrient(dynamic nutrientFromApi)
+  {
+    return Nutrient(
+      
+    );
+  }
 
-  // }
+  /// Convert API's food list item to app's food list item
+  Food _convertToFood(dynamic foodFromApi)
+  {
+    return Food(
+      id: foodFromApi['foodId'],
+      name: foodFromApi['label'],
+      thumbnailUrl: foodFromApi['image'],
+      nutrients: foodFromApi['nutrients'],
+      category: foodFromApi['category']
+    );
+  }
 
   /// Retrieves food's details.
   ///
@@ -64,10 +79,8 @@ class FoodRepository
       return null;
     }
 
-    FoodListItem? result;
-    final foodListFromApi = await _getFromAPI(id, errors);
-
-    return result;
+    final foodFromApi = await _getFromAPI(id, errors);
+    return null;
   }
 
   /// Retrieves a list of foods from API server

@@ -1,17 +1,19 @@
+import 'nutrient.dart';
+
 /// A subsystem for reading data about food details passed from the food repository
 class Food
 {
-  final String id;
-  final String name;
-  final Map<String, double> nutrients;
-  final String category;
-  final String thumbnailUrl;
+  final String _id;
+  final String _name;
+  final List<Nutrient> _nutrients;
+  final String _category;
+  final String? _thumbnailUrl;
 
-  Food({
-    required this.id,
-    required this.name,
-    required this.nutrients,
-    required this.category,
-    required this.thumbnailUrl,
-  });
+  Food(this._id, this._name, this._nutrients, this._category, this._thumbnailUrl);
+
+  String getId() => _id;
+  String getName() => _name;
+  String getCategory() => _category;
+  List<Nutrient> getNutrients() => _nutrients;
+  String? getThumbnail() => _thumbnailUrl;
 }

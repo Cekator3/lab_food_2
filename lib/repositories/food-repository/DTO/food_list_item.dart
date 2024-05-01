@@ -2,9 +2,13 @@
 /// needed to generate a list of foods.
 class FoodListItem
 {
-  final String id;
-  final String name;
-  final String? thumbnailUrl;
+  final String _id;
+  final String _name;
+  final String? _thumbnailUrl;
 
-  FoodListItem(this.id, this.name, this.thumbnailUrl);
+  FoodListItem(this._id, this._name, this._thumbnailUrl);
+
+  String getId() => _id;
+  String getName() => _name;
+  String? getThumbnail() => _thumbnailUrl;
 }

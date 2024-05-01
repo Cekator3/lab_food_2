@@ -2,9 +2,13 @@
 /// needed to generate a list of user's favorite foods.
 class FavoriteFoodListItem
 {
-  final String id;
-  final String name;
-  final String thumbnailUrl;
+  final String _id;
+  final String _name;
+  final String? _thumbnailUrl;
 
-  FavoriteFoodListItem(this.id, this.name, this.thumbnailUrl);
+  FavoriteFoodListItem(this._id, this._name, this._thumbnailUrl);
+
+  String getId() => _id;
+  String getName() => _name;
+  String? getThumbnail() => _thumbnailUrl;
 }
