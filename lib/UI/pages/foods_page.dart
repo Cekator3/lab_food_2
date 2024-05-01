@@ -111,17 +111,18 @@ class FoodsPageState extends State<FoodsPage>
                   itemCount: _foodList.length,
                   itemBuilder: (context, index)
                   {
+                    FoodListItem food = _foodList[index];
                     return Padding(
                       padding: const EdgeInsets.all(2.0),
                       child: ListTile(
-                        title: Text(_foodList[index].getName()),
-                        leading: _getFoodThumbnail(_foodList[index]),
+                        title: Text(food.getName()),
+                        leading: _getFoodThumbnail(food),
                         onTap: ()
                         {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => FoodDetailsPage(foodId: _foodList[index].getId()),
+                              builder: (context) => FoodDetailsPage(foodId: food.getId()),
                             ),
                           );
                         },
