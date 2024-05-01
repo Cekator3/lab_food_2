@@ -123,27 +123,27 @@ class FoodDetailsPageState extends State<FoodDetailsPage>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: Text('Категория: ${_food!.getCategory()}'),
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: Text('Энергетическая ценность: ${_food!.getNutrient().getEnergyInKcal()} ккал.'),
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: Text('Белки: ${_food!.getNutrient().getProteinInGram()} г.'),
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: Text('Жиры: ${_food!.getNutrient().getFatInGram()} г.'),
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: Text('Углеводы: ${_food!.getNutrient().getCarbohydrateInGram()} г.'),
                         ),
                       ],
