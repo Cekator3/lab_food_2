@@ -12,13 +12,14 @@ abstract class Errors
     _errors |= error;
   }
 
-	/// Returns `true` if any error occurred
+	/// Checks if any error occurred
 	bool hasAny()
 	{
 		return _errors != 0;
 	}
 
 	@protected
+  /// Checks if [error] occurred
 	bool has(int error)
 	{
 		return (_errors & error) != 0;
