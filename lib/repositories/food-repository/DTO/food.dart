@@ -1,6 +1,7 @@
 import 'nutrient.dart';
 
-/// A subsystem for reading data about food details passed from the food repository
+/// A subsystem for reading data about food details
+/// passed from the food repository
 class Food
 {
   final String _id;
