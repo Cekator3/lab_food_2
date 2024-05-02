@@ -23,17 +23,35 @@ class FoodDetailsPageState extends State<FoodDetailsPage>
   late FavoriteFoodRepository _favoriteFoods;
   bool _isFoodFavorite = false;
 
+  void showErrorMessage(String message)
+  {
+      final snackBar = SnackBar(
+          content: Text(message),
+          backgroundColor: Colors.red,
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
   Future<void> _initFoodDetails() async
   {
     final foods = FoodRepository();
     final errors = FoodRepositoryGetErrors();
 
     final food = await foods.get(widget.foodId, errors);
+
+    if (errors.hasAny())
+    {
+      if (errors.isInternetConnectionMissing())
+        showErrorMessage('Отсутствует интернет-соединение');
+      if (errors.isInternalErrorOccurred())
+        showErrorMessage('В приложении произошла критическая ошибка. Разработчики уже были оповещены.');
+
+      return;
+    }
+
     setState(() {
       _food = food;
     });
-
-    // TODO errors handling
   }
 
   /// Reverses food's "favorite" status.

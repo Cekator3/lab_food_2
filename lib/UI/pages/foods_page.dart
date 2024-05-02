@@ -1,3 +1,5 @@
+// ignore_for_file: curly_braces_in_flow_control_structures
+
 import 'package:flutter/material.dart';
 import '../../repositories/food-repository/DTO/food_list_item.dart';
 import '../../repositories/food-repository/errors/food_repository_find_errors.dart';
@@ -17,6 +19,15 @@ class FoodsPageState extends State<FoodsPage>
   String _searchQuery = '';
   List<FoodListItem>? _foodList = [];
 
+    void showErrorMessage(String message)
+    {
+        final snackBar = SnackBar(
+            content: Text(message),
+            backgroundColor: Colors.red,
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
+
   void _performSearch() async
   {
     final foods = FoodRepository();
@@ -27,7 +38,20 @@ class FoodsPageState extends State<FoodsPage>
     });
     final foodList = await foods.find(_searchQuery, errors);
 
-    // TODO errors handling
+    if (errors.hasAny())
+    {
+      setState(() {
+        _foodList = [];
+        _searchQuery = '';
+      });
+
+      if (errors.isInternetConnectionMissing())
+        showErrorMessage('Отсутствует интернет-соединение');
+      if (errors.isInternalErrorOccurred())
+        showErrorMessage('В приложении произошла критическая ошибка. Разработчики уже были оповещены.');
+
+      return;
+    }
 
     setState(() {
       _foodList = foodList;

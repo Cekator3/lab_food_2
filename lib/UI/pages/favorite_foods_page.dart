@@ -1,3 +1,5 @@
+// ignore_for_file: curly_braces_in_flow_control_structures
+
 import 'package:flutter/material.dart';
 import 'package:lab_food_2/repositories/favorite-food-repository/DTO/favorite_food_list_item.dart';
 import 'package:lab_food_2/repositories/favorite-food-repository/errors/favorite_food_repository_get_all_errors.dart';
@@ -17,6 +19,15 @@ class FavoriteFoodsPageState extends State<FavoriteFoodsPage>
 {
   List<FavoriteFoodListItem>? _foodList;
 
+  void showErrorMessage(String message)
+  {
+      final snackBar = SnackBar(
+          content: Text(message),
+          backgroundColor: Colors.red,
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
   Future<void> _updateFoodList() async
   {
       final foods = FavoriteFoodRepository();
@@ -24,6 +35,15 @@ class FavoriteFoodsPageState extends State<FavoriteFoodsPage>
 
       await foods.init();
       final foodList = await foods.getAll(errors);
+      if (errors.hasAny())
+      {
+        if (errors.isInternetConnectionMissing())
+          showErrorMessage('Отсутствует интернет-соединение');
+        if (errors.isInternalErrorOccurred())
+          showErrorMessage('В приложении произошла критическая ошибка. Разработчики уже были оповещены.');
+
+        return;
+      }
       setState(() {
         _foodList = foodList;
       });

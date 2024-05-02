@@ -8,7 +8,7 @@ import 'package:lab_food_2/errors.dart';
 class FoodRepositoryFindErrors extends Errors
 {
   static const int INTERNET_CONNECTION_MISSING = 1;
-  static const int INTERNAL = 1;
+  static const int INTERNAL = 1 << 1;
 
   /// Checks if ocurred an error because the internet connection is missing
   bool isInternetConnectionMissing()
