@@ -5,9 +5,9 @@ import '../../food_details_page/food_details_page.dart';
 /// A subsystem for displaying "List of foods" widget of "Foods" page to the user.
 class FoodListWidget extends StatelessWidget
 {
-  final List<FoodListItem>? foodList;
+  final List<FoodListItem> foodList;
 
-  const FoodListWidget({super.key, this.foodList});
+  const FoodListWidget({super.key, required this.foodList});
 
   SizedBox _getFoodThumbnail(FoodListItem food)
   {
@@ -31,13 +31,11 @@ class FoodListWidget extends StatelessWidget
                 borderRadius: BorderRadius.circular(10.0)
             ),
             padding: const EdgeInsets.all(16.0),
-            child: foodList!.isEmpty
-                ? const Center(child: Text('Начните поиск'))
-                : ListView.builder(
-                    itemCount: foodList!.length,
+            child: ListView.builder(
+                    itemCount: foodList.length,
                     itemBuilder: (context, index)
                     {
-                      FoodListItem food = foodList![index];
+                      FoodListItem food = foodList[index];
                       return Padding(
                         padding: const EdgeInsets.all(2.0),
                         child: ListTile(
