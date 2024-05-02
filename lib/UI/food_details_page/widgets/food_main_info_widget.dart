@@ -33,30 +33,15 @@ class FoodMainInfoWidget extends StatelessWidget
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Text('Категория: ${_food.getCategory()}'),
-            ),
+            Text('Категория: ${_food.getCategory()}'),
             const SizedBox(height: 10),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Text('Энергетическая ценность: ${_food.getNutrient().getEnergyInKcal()} ккал.'),
-            ),
+            Text('Энергетическая ценность: ${_food.getNutrient().getEnergyInKcal()} ккал.'),
             const SizedBox(height: 10),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Text('Белки: ${_food.getNutrient().getProteinInGram()} г.'),
-            ),
+            Text('Белки: ${_food.getNutrient().getProteinInGram()} г.'),
             const SizedBox(height: 10),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Text('Жиры: ${_food.getNutrient().getFatInGram()} г.'),
-            ),
+            Text('Жиры: ${_food.getNutrient().getFatInGram()} г.'),
             const SizedBox(height: 10),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Text('Углеводы: ${_food.getNutrient().getCarbohydrateInGram()} г.'),
-            ),
+            Text('Углеводы: ${_food.getNutrient().getCarbohydrateInGram()} г.'),
           ],
         )
       ],

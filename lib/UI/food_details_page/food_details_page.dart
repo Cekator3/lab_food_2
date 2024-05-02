@@ -96,7 +96,7 @@ class FoodDetailsPageState extends State<FoodDetailsPage>
           IconButton(
             icon: Icon(
               _isFoodFavorite ? Icons.favorite : Icons.favorite_border,
-              color: _isFoodFavorite ? Colors.amber : Colors.black,
+              color: _isFoodFavorite ? Colors.amber : Colors.white,
             ),
             onPressed: _toggleFoodFavoriteStatus,
           )

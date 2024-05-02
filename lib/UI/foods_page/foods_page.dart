@@ -94,6 +94,9 @@ class FoodsPageState extends State<FoodsPage>
       builder: (context)
       {
         return AlertDialog(
+          surfaceTintColor: Colors.cyan,
+          shadowColor: Colors.cyan,
+          iconColor: Colors.cyan,
           title: const Text(
             'Поиск',
             style: TextStyle(

@@ -37,15 +37,15 @@ class FoodAppState extends State<FoodApp>
               const TextTheme(
                 bodyMedium: TextStyle(
                   color: Colors.black,
-                  fontSize: 18,
+                  fontSize: 16,
                 ),
                 bodySmall: TextStyle(
                   color: Colors.black,
-                  fontSize: 14,
+                  fontSize: 16,
                 ),
                 bodyLarge: TextStyle(
                   color: Colors.black,
-                  fontSize: 24,
+                  fontSize: 22,
                 )
               )
             ),
@@ -69,6 +69,7 @@ class FoodAppState extends State<FoodApp>
           bottomNavigationBar: BottomNavigationBar(
             currentIndex: currentIndex,
             onTap: onNavigationBarLinkTapped,
+            selectedItemColor: Colors.cyan,
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                 icon: Icon(Icons.home),

@@ -12,11 +12,11 @@ class FoodListWidget extends StatelessWidget
   SizedBox _getFoodThumbnail(FoodListItem food)
   {
     return SizedBox(
-      width: 50.0,
-      height: 50.0,
+      width: 70,
+      height: 70,
       child: food.getThumbnail() == null
         ?  const Icon(Icons.image, color: Colors.white)
-        :  Image.network(food.getThumbnail()!, fit: BoxFit.cover)
+        : Image.network(food.getThumbnail()!, fit: BoxFit.cover)
     );
   }
 
@@ -37,7 +37,7 @@ class FoodListWidget extends StatelessWidget
                     {
                       FoodListItem food = foodList[index];
                       return Padding(
-                        padding: const EdgeInsets.all(2.0),
+                        padding: const EdgeInsets.only(bottom: 16),
                         child: ListTile(
                           title: Text(
                             food.getName(),
