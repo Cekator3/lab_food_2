@@ -1,7 +1,7 @@
 // ignore_for_file: curly_braces_in_flow_control_structures
 
 import 'package:flutter/material.dart';
-import '../food_details_page/food_details_page.dart';
+import 'package:lab_food_2/UI/foods_page/widgets/food_list.dart';
 import '../../repositories/food-repository/DTO/food_list_item.dart';
 import '../../repositories/food-repository/errors/food_repository_find_errors.dart';
 import '../../repositories/food-repository/food_repository.dart';
@@ -102,17 +102,6 @@ class FoodsPageState extends State<FoodsPage>
     }
   }
 
-  SizedBox _getFoodThumbnail(FoodListItem food)
-  {
-    return SizedBox(
-      width: 50.0,
-      height: 50.0,
-      child: food.getThumbnail() == null
-        ?  const Icon(Icons.image, color: Colors.white)
-        :  Image.network(food.getThumbnail()!, fit: BoxFit.cover)
-    );
-  }
-
   @override
   Widget build(BuildContext context)
   {
@@ -129,41 +118,7 @@ class FoodsPageState extends State<FoodsPage>
       body:
       _foodList == null
         ? const Center(child: CircularProgressIndicator())
-        : Container(
-          padding: const EdgeInsets.all(16.0),
-          child: Container(
-            decoration: BoxDecoration(
-                color: Colors.grey[300],
-                borderRadius: BorderRadius.circular(10.0)
-            ),
-            padding: const EdgeInsets.all(16.0),
-            child: _foodList!.isEmpty
-                ? const Center(child: Text('Начните поиск'))
-                : ListView.builder(
-                    itemCount: _foodList!.length,
-                    itemBuilder: (context, index)
-                    {
-                      FoodListItem food = _foodList![index];
-                      return Padding(
-                        padding: const EdgeInsets.all(2.0),
-                        child: ListTile(
-                          title: Text(food.getName()),
-                          leading: _getFoodThumbnail(food),
-                          onTap: ()
-                          {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => FoodDetailsPage(foodId: food.getId()),
-                              ),
-                            );
-                          },
-                        ),
-                      );
-                    },
-                  ),
-          ),
-      ),
+        : FoodListWidget(foodList: _foodList,)
     );
   }
 }
