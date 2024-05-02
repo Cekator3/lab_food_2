@@ -6,6 +6,13 @@ import '../../repositories/food-repository/DTO/food_list_item.dart';
 import '../../repositories/food-repository/errors/food_repository_find_errors.dart';
 import '../../repositories/food-repository/food_repository.dart';
 
+enum LoadingStatus
+{
+  loading,
+  notLoading,
+  failed
+}
+
 class FoodsPage extends StatefulWidget
 {
   const FoodsPage({super.key});
@@ -18,6 +25,7 @@ class FoodsPageState extends State<FoodsPage>
 {
   String _searchQuery = '';
   List<FoodListItem>? _foodList = [];
+  LoadingStatus _loadingStatus = LoadingStatus.notLoading;
 
   void showErrorMessage(String message)
   {
@@ -34,15 +42,14 @@ class FoodsPageState extends State<FoodsPage>
     final errors = FoodRepositoryFindErrors();
 
     setState(() {
-      _foodList = null;
+      _loadingStatus = LoadingStatus.loading;
     });
     final foodList = await foods.find(_searchQuery, errors);
 
     if (errors.hasAny())
     {
       setState(() {
-        _foodList = [];
-        _searchQuery = '';
+        _loadingStatus = LoadingStatus.failed;
       });
 
       if (errors.isInternetConnectionMissing())
@@ -54,8 +61,30 @@ class FoodsPageState extends State<FoodsPage>
     }
 
     setState(() {
+      _loadingStatus = LoadingStatus.notLoading;
       _foodList = foodList;
     });
+  }
+
+  Widget _getBody()
+  {
+    switch (_loadingStatus)
+    {
+      case LoadingStatus.loading:
+        return const Center(child: CircularProgressIndicator());
+
+      case LoadingStatus.failed:
+        return const Center(child: Text('Произошла ошибка'));
+
+      case LoadingStatus.notLoading:
+        if (_foodList!.isNotEmpty)
+          return FoodListWidget(foodList: _foodList!);
+
+        if (_searchQuery.isEmpty)
+          return const Center(child: Text('Начните искать продукты'));
+        else
+          return const Center(child: Text('Ничего не было найдено'));
+    }
   }
 
   void _showSearchDialog() async
@@ -115,10 +144,7 @@ class FoodsPageState extends State<FoodsPage>
           )
         ],
       ),
-      body:
-      _foodList == null
-        ? const Center(child: CircularProgressIndicator())
-        : FoodListWidget(foodList: _foodList,)
+      body: _getBody()
     );
   }
 }
