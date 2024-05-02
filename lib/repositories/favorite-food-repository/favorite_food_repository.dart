@@ -13,17 +13,23 @@ class FavoriteFoodRepository
   static const String _APP_ID = 'b8e1c762';
   static const String _APP_KEY = 'b0b1379f2ba58396198214cc4f9c476c';
   static SharedPreferences? _storage;
-  List<String>? _favoriteFoodsIds;
 
+  /// Initializes the FavoriteFoodRepository
   Future<void> init() async
   {
-    _storage = await SharedPreferences.getInstance();
-    _favoriteFoodsIds = _storage!.getStringList('favoriteFoods') ?? [];
+    _storage = _storage ?? await SharedPreferences.getInstance();
   }
 
-  void _updateStorage()
+  /// Replaces favorite foods identifiers
+  void _replaceFavoriteFoodsIds(List<String> favoriteFoodsIds)
   {
-    _storage?.setStringList('favoriteFoods', _favoriteFoodsIds ?? []);
+    _storage!.setStringList('favoriteFoods', favoriteFoodsIds);
+  }
+
+  /// Retrieves favorite foods identifiers
+  List<String> _getFavoriteFoodsIds()
+  {
+    return _storage!.getStringList('favoriteFoods') ?? [];
   }
 
   /// Adds a food to the user's list of favorite foods.
@@ -34,11 +40,12 @@ class FavoriteFoodRepository
     if (_storage == null)
       throw Exception('FavoriteFoodRepository not initialized. Please call init procedure before any interaction attempt.');
 
-    if (_favoriteFoodsIds!.contains(foodId))
+    List<String> favoriteFoodsIds = _getFavoriteFoodsIds();
+    if (favoriteFoodsIds.contains(foodId))
       return;
 
-    _favoriteFoodsIds!.add(foodId);
-    _updateStorage();
+    favoriteFoodsIds.add(foodId);
+    _replaceFavoriteFoodsIds(favoriteFoodsIds);
   }
 
   /// Removes a food from the user's list of favorite foods.
@@ -49,8 +56,9 @@ class FavoriteFoodRepository
     if (_storage == null)
       throw Exception('FavoriteFoodRepository not initialized. Please call init procedure before any interaction attempt.');
 
-    _favoriteFoodsIds!.remove(foodId);
-    _updateStorage();
+    List<String> favoriteFoodsIds = _getFavoriteFoodsIds();
+    favoriteFoodsIds.remove(foodId);
+    _replaceFavoriteFoodsIds(favoriteFoodsIds);
   }
 
   /// Checks if a food is in the user's list of favorite foods.
@@ -59,7 +67,8 @@ class FavoriteFoodRepository
     if (_storage == null)
       throw Exception('FavoriteFoodRepository not initialized. Please call init procedure before any interaction attempt.');
 
-    return _favoriteFoodsIds!.contains(foodId);
+    List<String> favoriteFoodsIds = _getFavoriteFoodsIds();
+    return favoriteFoodsIds.contains(foodId);
   }
 
 
@@ -118,8 +127,9 @@ class FavoriteFoodRepository
       return [];
     }
 
+    List<String> favoriteFoodsIds = _getFavoriteFoodsIds();
     List<FavoriteFoodListItem> result = [];
-    for (String foodId in _favoriteFoodsIds ?? [])
+    for (String foodId in favoriteFoodsIds)
     {
       final foodFromApi = await _getFoodFromApi(foodId, errors);
       if (errors.hasAny())
