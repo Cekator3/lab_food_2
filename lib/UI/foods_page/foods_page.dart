@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../../repositories/food-repository/DTO/food_list_item.dart';
 import '../../repositories/food-repository/errors/food_repository_find_errors.dart';
 import '../../repositories/food-repository/food_repository.dart';
-import 'food_details_page.dart';
+import '../food_details_page/food_details_page.dart';
 
 class FoodsPage extends StatefulWidget
 {

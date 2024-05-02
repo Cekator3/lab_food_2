@@ -5,7 +5,7 @@ import 'package:lab_food_2/repositories/favorite-food-repository/DTO/favorite_fo
 import 'package:lab_food_2/repositories/favorite-food-repository/errors/favorite_food_repository_get_all_errors.dart';
 import 'package:lab_food_2/repositories/favorite-food-repository/favorite_food_repository.dart';
 
-import 'food_details_page.dart';
+import '../food_details_page/food_details_page.dart';
 
 class FavoriteFoodsPage extends StatefulWidget
 {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lab_food_2/UI/pages/favorite_foods_page.dart';
-import 'package:lab_food_2/UI/pages/foods_page.dart';
+import 'package:lab_food_2/UI/favorite_foods_page/favorite_foods_page.dart';
+import 'package:lab_food_2/UI/foods_page/foods_page.dart';
 
 class FoodApp extends StatefulWidget
 {
