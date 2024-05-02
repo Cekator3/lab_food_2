@@ -15,13 +15,16 @@ class FoodsPage extends StatefulWidget
 class FoodsPageState extends State<FoodsPage>
 {
   String _searchQuery = '';
-  List<FoodListItem> _foodList = [];
+  List<FoodListItem>? _foodList = [];
 
   void _performSearch() async
   {
     final foods = FoodRepository();
     final errors = FoodRepositoryFindErrors();
 
+    setState(() {
+      _foodList = null;
+    });
     final foodList = await foods.find(_searchQuery, errors);
 
     // TODO errors handling
@@ -29,8 +32,6 @@ class FoodsPageState extends State<FoodsPage>
     setState(() {
       _foodList = foodList;
     });
-
-    Navigator.pop(context);
   }
 
   void _showSearchDialog() async
@@ -59,7 +60,11 @@ class FoodsPageState extends State<FoodsPage>
               child: const Text('Отмена'),
             ),
             TextButton(
-              onPressed: _performSearch,
+              onPressed: ()
+              {
+                _performSearch();
+                Navigator.pop(context);
+              },
               child: const Text('OK'),
             ),
           ],
@@ -97,40 +102,43 @@ class FoodsPageState extends State<FoodsPage>
           )
         ],
       ),
-      body: Container(
-        padding: const EdgeInsets.all(16.0),
-        child: Container(
-          decoration: BoxDecoration(
-              color: Colors.grey[300],
-              borderRadius: BorderRadius.circular(10.0)
-          ),
+      body:
+      _foodList == null
+        ? const Center(child: CircularProgressIndicator())
+        : Container(
           padding: const EdgeInsets.all(16.0),
-          child: _foodList.isEmpty
-              ? const Center(child: Text('Начните поиск'))
-              : ListView.builder(
-                  itemCount: _foodList.length,
-                  itemBuilder: (context, index)
-                  {
-                    FoodListItem food = _foodList[index];
-                    return Padding(
-                      padding: const EdgeInsets.all(2.0),
-                      child: ListTile(
-                        title: Text(food.getName()),
-                        leading: _getFoodThumbnail(food),
-                        onTap: ()
-                        {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => FoodDetailsPage(foodId: food.getId()),
-                            ),
-                          );
-                        },
-                      ),
-                    );
-                  },
-                ),
-        ),
+          child: Container(
+            decoration: BoxDecoration(
+                color: Colors.grey[300],
+                borderRadius: BorderRadius.circular(10.0)
+            ),
+            padding: const EdgeInsets.all(16.0),
+            child: _foodList!.isEmpty
+                ? const Center(child: Text('Начните поиск'))
+                : ListView.builder(
+                    itemCount: _foodList!.length,
+                    itemBuilder: (context, index)
+                    {
+                      FoodListItem food = _foodList![index];
+                      return Padding(
+                        padding: const EdgeInsets.all(2.0),
+                        child: ListTile(
+                          title: Text(food.getName()),
+                          leading: _getFoodThumbnail(food),
+                          onTap: ()
+                          {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => FoodDetailsPage(foodId: food.getId()),
+                              ),
+                            );
+                          },
+                        ),
+                      );
+                    },
+                  ),
+          ),
       ),
     );
   }

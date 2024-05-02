@@ -17,13 +17,8 @@ class FavoriteFoodsPageState extends State<FavoriteFoodsPage>
 {
   List<FavoriteFoodListItem>? _foodList;
 
-  @override
-  void initState()
+  Future<void> _updateFoodList() async
   {
-    super.initState();
-
-    () async
-    {
       final foods = FavoriteFoodRepository();
       final errors = FavoriteFoodRepositoryGetAllErrors();
 
@@ -32,8 +27,15 @@ class FavoriteFoodsPageState extends State<FavoriteFoodsPage>
       setState(() {
         _foodList = foodList;
       });
-    } ();
   }
+
+  @override
+  void initState()
+  {
+    super.initState();
+    _updateFoodList();
+  }
+
 
   SizedBox _getFoodThumbnail(FavoriteFoodListItem food)
   {
@@ -49,6 +51,7 @@ class FavoriteFoodsPageState extends State<FavoriteFoodsPage>
   @override
   Widget build(BuildContext context)
   {
+    _updateFoodList();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Избранное'),
