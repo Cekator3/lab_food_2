@@ -19,14 +19,14 @@ class FoodsPageState extends State<FoodsPage>
   String _searchQuery = '';
   List<FoodListItem>? _foodList = [];
 
-    void showErrorMessage(String message)
-    {
-        final snackBar = SnackBar(
-            content: Text(message),
-            backgroundColor: Colors.red,
-        );
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-    }
+  void showErrorMessage(String message)
+  {
+    final snackBar = SnackBar(
+      content: Text(message),
+      backgroundColor: Colors.red,
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
 
   void _performSearch() async
   {
