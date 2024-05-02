@@ -1,11 +1,10 @@
 // ignore_for_file: curly_braces_in_flow_control_structures
 
 import 'package:flutter/material.dart';
-import 'package:lab_food_2/repositories/favorite-food-repository/DTO/favorite_food_list_item.dart';
-import 'package:lab_food_2/repositories/favorite-food-repository/errors/favorite_food_repository_get_all_errors.dart';
-import 'package:lab_food_2/repositories/favorite-food-repository/favorite_food_repository.dart';
-
 import '../food_details_page/food_details_page.dart';
+import '../../repositories/favorite-food-repository/DTO/favorite_food_list_item.dart';
+import '../../repositories/favorite-food-repository/errors/favorite_food_repository_get_all_errors.dart';
+import '../../repositories/favorite-food-repository/favorite_food_repository.dart';
 
 class FavoriteFoodsPage extends StatefulWidget
 {

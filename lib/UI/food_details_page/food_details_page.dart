@@ -1,11 +1,11 @@
 // ignore_for_file: curly_braces_in_flow_control_structures
+
 import 'package:flutter/material.dart';
 import 'package:flutter_image/network.dart';
-import 'package:lab_food_2/repositories/favorite-food-repository/favorite_food_repository.dart';
-import 'package:lab_food_2/repositories/food-repository/errors/food_repository_get_errors.dart';
-import 'package:lab_food_2/repositories/food-repository/food_repository.dart';
-
+import '../../repositories/favorite-food-repository/favorite_food_repository.dart';
 import '../../repositories/food-repository/DTO/food.dart';
+import '../../repositories/food-repository/errors/food_repository_get_errors.dart';
+import '../../repositories/food-repository/food_repository.dart';
 
 class FoodDetailsPage extends StatefulWidget
 {
