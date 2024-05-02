@@ -94,7 +94,12 @@ class FoodsPageState extends State<FoodsPage>
       builder: (context)
       {
         return AlertDialog(
-          title: const Text('Поиск'),
+          title: const Text(
+            'Поиск',
+            style: TextStyle(
+              color: Colors.black
+            ),
+          ),
           content: TextField(
             onChanged: (value)
             {

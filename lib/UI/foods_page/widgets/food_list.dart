@@ -39,7 +39,10 @@ class FoodListWidget extends StatelessWidget
                       return Padding(
                         padding: const EdgeInsets.all(2.0),
                         child: ListTile(
-                          title: Text(food.getName()),
+                          title: Text(
+                            food.getName(),
+                            style: const TextStyle(color: Colors.black),
+                          ),
                           leading: _getFoodThumbnail(food),
                           onTap: ()
                           {

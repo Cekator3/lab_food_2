@@ -2,10 +2,10 @@
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'DTO/favorite_food_list_item.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
-import 'package:lab_food_2/repositories/favorite-food-repository/DTO/favorite_food_list_item.dart';
-import 'package:lab_food_2/repositories/favorite-food-repository/errors/favorite_food_repository_get_all_errors.dart';
+import 'errors/favorite_food_repository_get_all_errors.dart';
 
 /// A subsystem for interaction with stored data on user's favourite foods.
 class FavoriteFoodRepository
@@ -20,14 +20,14 @@ class FavoriteFoodRepository
     _storage = _storage ?? await SharedPreferences.getInstance();
   }
 
-  /// Replaces favorite foods identifiers
-  void _replaceFavoriteFoodsIds(List<String> favoriteFoodsIds)
+  /// Replaces favorite foods identifiers in storage
+  void _setIdentifiers(List<String> favoriteFoodsIds)
   {
     _storage!.setStringList('favoriteFoods', favoriteFoodsIds);
   }
 
-  /// Retrieves favorite foods identifiers
-  List<String> _getFavoriteFoodsIds()
+  /// Retrieves favorite foods identifiers from storage
+  List<String> _getIdentifiers()
   {
     return _storage!.getStringList('favoriteFoods') ?? [];
   }
@@ -40,12 +40,12 @@ class FavoriteFoodRepository
     if (_storage == null)
       throw Exception('FavoriteFoodRepository not initialized. Please call init procedure before any interaction attempt.');
 
-    List<String> favoriteFoodsIds = _getFavoriteFoodsIds();
+    List<String> favoriteFoodsIds = _getIdentifiers();
     if (favoriteFoodsIds.contains(foodId))
       return;
 
     favoriteFoodsIds.add(foodId);
-    _replaceFavoriteFoodsIds(favoriteFoodsIds);
+    _setIdentifiers(favoriteFoodsIds);
   }
 
   /// Removes a food from the user's list of favorite foods.
@@ -56,9 +56,10 @@ class FavoriteFoodRepository
     if (_storage == null)
       throw Exception('FavoriteFoodRepository not initialized. Please call init procedure before any interaction attempt.');
 
-    List<String> favoriteFoodsIds = _getFavoriteFoodsIds();
+    List<String> favoriteFoodsIds = _getIdentifiers();
     favoriteFoodsIds.remove(foodId);
-    _replaceFavoriteFoodsIds(favoriteFoodsIds);
+
+    _setIdentifiers(favoriteFoodsIds);
   }
 
   /// Checks if a food is in the user's list of favorite foods.
@@ -67,8 +68,7 @@ class FavoriteFoodRepository
     if (_storage == null)
       throw Exception('FavoriteFoodRepository not initialized. Please call init procedure before any interaction attempt.');
 
-    List<String> favoriteFoodsIds = _getFavoriteFoodsIds();
-    return favoriteFoodsIds.contains(foodId);
+    return _getIdentifiers().contains(foodId);
   }
 
 
@@ -127,7 +127,7 @@ class FavoriteFoodRepository
       return [];
     }
 
-    List<String> favoriteFoodsIds = _getFavoriteFoodsIds();
+    List<String> favoriteFoodsIds = _getIdentifiers();
     List<FavoriteFoodListItem> result = [];
     for (String foodId in favoriteFoodsIds)
     {

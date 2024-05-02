@@ -24,37 +24,40 @@ class FoodListWidget extends StatelessWidget
   Widget build(BuildContext context)
   {
     return Container(
-          padding: const EdgeInsets.all(16.0),
-          child: Container(
-            decoration: BoxDecoration(
-                color: Colors.grey[300],
-                borderRadius: BorderRadius.circular(10.0)
-            ),
-            padding: const EdgeInsets.all(16.0),
-            child: ListView.builder(
-                    itemCount: foodList.length,
-                    itemBuilder: (context, index)
-                    {
-                      FavoriteFoodListItem food = foodList[index];
+      padding: const EdgeInsets.all(16.0),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.grey[300],
+          borderRadius: BorderRadius.circular(10.0)
+        ),
+        padding: const EdgeInsets.all(16.0),
+        child: ListView.builder(
+                itemCount: foodList.length,
+                itemBuilder: (context, index)
+                {
+                  FavoriteFoodListItem food = foodList[index];
 
-                      return Padding(
-                        padding: const EdgeInsets.all(2.0),
-                        child: ListTile(
-                          title: Text(food.getName()),
-                          leading: _getFoodThumbnail(food),
-                          onTap: ()
-                          {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => FoodDetailsPage(foodId: food.getId()),
-                              ),
-                            );
-                          },
-                        ),
-                      );
-                    },
-                  ),
+                  return Padding(
+                    padding: const EdgeInsets.all(2.0),
+                    child: ListTile(
+                      title: Text(
+                        food.getName(),
+                        style: const TextStyle(color: Colors.black),
+                      ),
+                      leading: _getFoodThumbnail(food),
+                      onTap: ()
+                      {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => FoodDetailsPage(foodId: food.getId()),
+                          ),
+                        );
+                      },
+                    ),
+                  );
+                },
+              ),
           ),
     );
   }

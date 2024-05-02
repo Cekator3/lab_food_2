@@ -30,10 +30,25 @@ class FoodAppState extends State<FoodApp>
         theme: ThemeData(
             useMaterial3: true,
             colorScheme: const ColorScheme.light(
-                onSurface: Colors.cyan,
+                onSurface: Colors.white,
                 onBackground: Colors.cyan,
             ),
-            textTheme: GoogleFonts.manropeTextTheme(),
+            textTheme: GoogleFonts.manropeTextTheme(
+              const TextTheme(
+                bodyMedium: TextStyle(
+                  color: Colors.black,
+                  fontSize: 18,
+                ),
+                bodySmall: TextStyle(
+                  color: Colors.black,
+                  fontSize: 14,
+                ),
+                bodyLarge: TextStyle(
+                  color: Colors.black,
+                  fontSize: 24,
+                )
+              )
+            ),
             appBarTheme: const AppBarTheme(
                 backgroundColor: Colors.cyan,
                 titleTextStyle: TextStyle(

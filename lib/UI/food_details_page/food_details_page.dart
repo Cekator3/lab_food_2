@@ -1,7 +1,7 @@
 // ignore_for_file: curly_braces_in_flow_control_structures
 
 import 'package:flutter/material.dart';
-import 'package:flutter_image/network.dart';
+import 'package:lab_food_2/UI/food_details_page/widgets/food_main_info_widget.dart';
 import '../../repositories/favorite-food-repository/favorite_food_repository.dart';
 import '../../repositories/food-repository/DTO/food.dart';
 import '../../repositories/food-repository/errors/food_repository_get_errors.dart';
@@ -119,56 +119,7 @@ class FoodDetailsPageState extends State<FoodDetailsPage>
 
               child: _food == null
                ? const Center(child: CircularProgressIndicator())
-               : SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Container(
-                      width: double.infinity,
-                      height: 200,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        image: DecorationImage(
-                          image: NetworkImageWithRetry(
-                            _food!.getThumbnail() ?? 'https://via.placeholder.com/150',
-                          ),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: Text('Категория: ${_food!.getCategory()}'),
-                        ),
-                        const SizedBox(height: 10),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: Text('Энергетическая ценность: ${_food!.getNutrient().getEnergyInKcal()} ккал.'),
-                        ),
-                        const SizedBox(height: 10),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: Text('Белки: ${_food!.getNutrient().getProteinInGram()} г.'),
-                        ),
-                        const SizedBox(height: 10),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: Text('Жиры: ${_food!.getNutrient().getFatInGram()} г.'),
-                        ),
-                        const SizedBox(height: 10),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: Text('Углеводы: ${_food!.getNutrient().getCarbohydrateInGram()} г.'),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-               )
+               : SingleChildScrollView(child: FoodMainInfoWidget(_food!))
             ),
           )
         ],
